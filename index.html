@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Livret de Bord — Camion Net</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0D1B2A;
-    --navy-mid: #1B2D42;
-    --navy-light: #243347;
-    --blue: #1A4B8C;
-    --blue-light: #2E6CC4;
-    --orange: #F4722B;
-    --orange-light: #FF9A62;
-    --orange-pale: #FFF0E8;
-    --teal: #0ABFA3;
-    --teal-pale: #E4FAF7;
+    --navy: #0F2137;
+    --navy-mid: #162D48;
+    --navy-light: #1E3D5C;
+    --blue: #1B5FA8;
+    --blue-light: #3D9BE9;
+    --orange: #2880C4;
+    --orange-light: #3D9BE9;
+    --orange-pale: #E8F4FD;
+    --teal: #1A7EC8;
+    --teal-pale: #DCF0FC;
     --yellow: #FFD166;
     --red: #E63946;
     --red-pale: #FFF0F0;
@@ -27,22 +27,22 @@
     --gray-400: #ADB5BD;
     --gray-600: #6C757D;
     --gray-800: #343A40;
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-display: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 18px;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+    --shadow-sm: 0 1px 4px rgba(15,33,55,0.08), 0 2px 12px rgba(15,33,55,0.04);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: var(--font-body); background: var(--gray-100); color: var(--navy); min-height:100vh; padding-bottom:80px; }
+  body { font-family: var(--font-body); background: #EEF4FB; color: var(--navy); min-height:100vh; padding-bottom:80px; }
 
   /* HEADER */
   .header { background: var(--navy); position:sticky; top:0; z-index:100; box-shadow:0 2px 16px rgba(0,0,0,0.3); }
   .header-inner { max-width:700px; margin:0 auto; padding:10px 18px; display:flex; align-items:center; justify-content:space-between; }
   .logo-wrap { display:flex; align-items:center; gap:10px; }
-  .logo-svg-box { background:rgba(255,255,255,0.07); border-radius:8px; padding:4px 5px; height:44px; width:56px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid rgba(255,255,255,0.1); }
-  .logo-name { font-family:var(--font-display); font-weight:800; font-size:18px; color:white; line-height:1.1; }
+  .logo-svg-box { background:transparent; border-radius:0; padding:0; height:42px; width:auto; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .logo-name { font-family:var(--font-display); font-weight:700; font-size:17px; color:white; line-height:1.1; }
   .logo-name span { color:var(--orange); }
   .logo-sub { font-size:10px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.07em; font-weight:300; }
   .ver { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.65); font-size:11px; padding:4px 10px; border-radius:20px; }
@@ -51,7 +51,7 @@
   .nav-scroll { background:var(--navy-mid); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
   .nav-scroll::-webkit-scrollbar { display:none; }
   .nav-tabs { display:flex; padding:0 14px; min-width:max-content; }
-  .nav-tab { padding:10px 16px; font-family:var(--font-body); font-size:11.5px; font-weight:500; letter-spacing:0.03em; color:rgba(255,255,255,0.5); cursor:pointer; border-bottom:2.5px solid transparent; transition:all 0.2s; white-space:nowrap; background:none; border-top:none; border-left:none; border-right:none; }
+  .nav-tab { padding:10px 15px; font-family:var(--font-body); font-size:12.5px; font-weight:400; color:rgba(255,255,255,0.5); cursor:pointer; border-bottom:2.5px solid transparent; transition:all 0.2s; white-space:nowrap; background:none; border-top:none; border-left:none; border-right:none; text-transform:uppercase; font-size:10.5px; letter-spacing:0.07em; font-weight:600; }
   .nav-tab.active, .nav-tab:hover { color:var(--orange); border-bottom-color:var(--orange); }
 
   /* MAIN */
@@ -60,7 +60,7 @@
   .section.active { display:block; }
 
   /* HERO */
-  .hero-card { background:var(--navy); border-radius:var(--radius-lg); padding:26px 22px; margin-bottom:14px; position:relative; overflow:hidden; }
+  .hero-card { background:linear-gradient(135deg,var(--navy) 0%,#1B5FA8 100%); border-radius:var(--radius-lg); padding:26px 22px; margin-bottom:14px; position:relative; overflow:hidden; }
   .hero-card::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; background:var(--orange); opacity:0.07; border-radius:50%; }
   .hero-eyebrow { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); margin-bottom:7px; font-weight:500; }
   .hero-title { font-family:var(--font-display); font-size:27px; font-weight:800; color:white; line-height:1.1; margin-bottom:11px; }
@@ -90,12 +90,12 @@
   .c-role { font-size:12px; color:var(--gray-600); font-weight:300; margin-bottom:7px; line-height:1.4; }
   .c-links { display:flex; gap:7px; flex-wrap:wrap; }
   .c-link { font-size:12px; padding:3px 10px; border-radius:20px; text-decoration:none; font-weight:400; }
-  .c-link.ph { background:var(--orange-pale); color:#B84010; }
+  .c-link.ph { background:var(--orange-pale); color:var(--blue); }
   .c-link.em { background:#EEF3FF; color:#2B3FCC; word-break:break-all; }
 
   /* STEPS */
   .step { display:flex; gap:12px; margin-bottom:14px; align-items:flex-start; }
-  .step-n { width:28px; height:28px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:12px; color:white; flex-shrink:0; margin-top:2px; }
+  .step-n { width:28px; height:28px; background:var(--blue); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:12px; color:white; flex-shrink:0; margin-top:2px; }
   .step-t { font-weight:500; font-size:13.5px; color:var(--navy); margin-bottom:3px; line-height:1.3; }
   .step-d { font-size:13px; color:var(--gray-600); line-height:1.6; font-weight:300; }
 
@@ -119,7 +119,7 @@
   /* TABLES */
   .tbl-wrap { overflow-x:auto; border-radius:var(--radius-md); border:1px solid var(--gray-200); margin-bottom:13px; }
   table { width:100%; border-collapse:collapse; font-size:12.5px; }
-  th { background:var(--navy); color:white; padding:9px 13px; text-align:left; font-weight:500; font-size:11.5px; letter-spacing:0.03em; }
+  th { background:var(--blue); color:white; padding:9px 13px; text-align:left; font-weight:500; font-size:11.5px; letter-spacing:0.03em; }
   td { padding:9px 13px; border-bottom:1px solid var(--gray-100); color:var(--gray-800); vertical-align:middle; }
   tr:last-child td { border-bottom:none; }
   tr:nth-child(even) td { background:var(--gray-50); }
@@ -135,13 +135,13 @@
   .cl { list-style:none; }
   .cl li { display:flex; align-items:flex-start; gap:9px; padding:7px 0; border-bottom:1px solid var(--gray-100); font-size:13.5px; color:var(--gray-800); line-height:1.55; }
   .cl li:last-child { border-bottom:none; }
-  .dot { width:19px; height:19px; border-radius:50%; border:2px solid var(--orange); flex-shrink:0; margin-top:2px; }
+  .dot { width:19px; height:19px; border-radius:50%; border:2px solid var(--blue); flex-shrink:0; margin-top:2px; }
   .dot.t { border-color:var(--teal); }
   .dot.r { border-color:var(--red); }
   .dot.b { border-color:var(--blue-light); }
 
   /* SEC TITLE */
-  .sec-t { font-family:var(--font-display); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--orange); margin-bottom:12px; padding-bottom:7px; border-bottom:1px solid var(--gray-200); }
+  .sec-t { font-family:var(--font-display); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue); margin-bottom:12px; padding-bottom:7px; border-bottom:2px solid var(--orange-pale); }
 
   /* RULE BLOCKS */
   .rule { background:white; border-radius:var(--radius-md); padding:15px 17px; margin-bottom:9px; box-shadow:var(--shadow-sm); }
@@ -150,7 +150,7 @@
   .rule-b { font-size:13px; color:var(--gray-600); line-height:1.65; font-weight:300; }
 
   /* PRODUCT HERO */
-  .prod-hero { background:var(--navy); border-radius:var(--radius-lg); padding:20px 18px; margin-bottom:13px; color:white; position:relative; overflow:hidden; }
+  .prod-hero { background:linear-gradient(135deg,var(--navy) 0%,#1B5FA8 100%); border-radius:var(--radius-lg); padding:20px 18px; margin-bottom:13px; color:white; position:relative; overflow:hidden; }
   .prod-hero::after { content:''; position:absolute; bottom:-35px; right:-25px; width:130px; height:130px; border-radius:50%; opacity:0.1; }
   .prod-hero.po::after { background:var(--orange); }
   .prod-hero.pt::after { background:var(--teal); }
@@ -185,7 +185,7 @@
   details { background:white; border-radius:var(--radius-md); margin-bottom:9px; box-shadow:var(--shadow-sm); overflow:hidden; }
   summary { padding:14px 16px; cursor:pointer; font-weight:500; font-size:13.5px; color:var(--navy); list-style:none; display:flex; align-items:center; justify-content:space-between; }
   summary::-webkit-details-marker { display:none; }
-  summary::after { content:'+'; font-size:17px; color:var(--orange); font-weight:400; flex-shrink:0; }
+  summary::after {  content:'+'; font-size:17px; color:var(--blue); font-weight:400; flex-shrink:0; }
   details[open] summary::after { content:'−'; }
   .det-b { padding:0 16px 14px; font-size:13px; color:var(--gray-600); line-height:1.7; border-top:1px solid var(--gray-100); font-weight:300; }
   .det-b p { margin-bottom:8px; }
@@ -194,7 +194,7 @@
   .det-b strong { color:var(--navy); font-weight:500; }
 
   /* FOOTER */
-  .footer { background:var(--navy); padding:15px 18px; margin-top:22px; border-radius:var(--radius-lg); text-align:center; }
+  .footer { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%); padding:15px 18px; margin-top:22px; border-radius:var(--radius-lg); text-align:center; }
   .footer p { font-size:11.5px; color:rgba(255,255,255,0.38); line-height:1.8; font-weight:300; }
   .footer strong { color:rgba(255,255,255,0.65); font-weight:500; }
 
@@ -202,11 +202,10 @@
   .bnav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid var(--gray-200); padding:7px 0 max(7px, env(safe-area-inset-bottom)); display:flex; justify-content:space-around; z-index:200; box-shadow:0 -3px 16px rgba(0,0,0,0.08); }
   .bn { display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; padding:3px 6px; border-radius:7px; transition:all 0.2s; background:none; border:none; }
   .bn:hover, .bn.active { background:var(--orange-pale); }
-  .bn-i { font-size:19px; line-height:1; display:flex; align-items:center; justify-content:center; }
-  .bn.active .bn-i svg { stroke:var(--orange); }
-  .bn-i svg { stroke:var(--gray-600); }
+  .bn-i { line-height:1; display:flex; align-items:center; justify-content:center; color:var(--gray-400); }
+  .bn.active .bn-i { color:var(--blue); }
   .bn-l { font-size:9.5px; color:var(--gray-600); font-family:var(--font-body); }
-  .bn.active .bn-l { color:var(--orange); }
+  .bn.active .bn-l { color:var(--blue); font-weight:600; }
 
   .tag-row { margin-bottom:13px; }
   .urg { font-family:var(--font-display); font-size:22px; font-weight:800; color:var(--red); }
@@ -228,29 +227,23 @@
     <div class="logo-wrap">
       <!-- Logo fidèle au logo Camionnet officiel : camion + bulles -->
       <div class="logo-svg-box">
-        <svg width="44" height="36" viewBox="0 0 110 90" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="30" cy="12" r="6" fill="#2E6CC4" opacity="0.95"/>
-          <circle cx="46" cy="5" r="8.5" fill="#2E6CC4" opacity="0.9"/>
-          <circle cx="63" cy="9" r="5.5" fill="#2E6CC4" opacity="0.95"/>
-          <circle cx="76" cy="4" r="4.5" fill="#2E6CC4" opacity="0.8"/>
-          <circle cx="87" cy="11" r="3.5" fill="#2E6CC4" opacity="0.7"/>
-          <rect x="6" y="62" width="98" height="5" rx="2.5" fill="#0D1B2A"/>
-          <rect x="8" y="36" width="30" height="28" rx="4" fill="#1B3A5C"/>
-          <rect x="12" y="39" width="20" height="14" rx="2.5" fill="#4A90D9"/>
-          <rect x="8" y="43" width="6" height="6" rx="1.5" fill="#FFD166"/>
-          <rect x="4" y="53" width="5" height="13" rx="2" fill="#0D1B2A"/>
-          <rect x="38" y="40" width="64" height="24" rx="3" fill="#1B3A5C"/>
-          <rect x="38" y="55" width="64" height="5" rx="1" fill="#F4722B" opacity="0.75"/>
-          <circle cx="24" cy="69" r="10" fill="#122233"/>
-          <circle cx="24" cy="69" r="6" fill="#3D6A8A"/>
-          <circle cx="24" cy="69" r="2.5" fill="#122233"/>
-          <circle cx="62" cy="69" r="10" fill="#122233"/>
-          <circle cx="62" cy="69" r="6" fill="#3D6A8A"/>
-          <circle cx="62" cy="69" r="2.5" fill="#122233"/>
-          <circle cx="82" cy="69" r="10" fill="#122233"/>
-          <circle cx="82" cy="69" r="6" fill="#3D6A8A"/>
-          <circle cx="82" cy="69" r="2.5" fill="#122233"/>
-        </svg>
+        <svg width="42" height="42" viewBox="0 0 110 105" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="44" cy="22" r="8" fill="none" stroke="#85C2E8" stroke-width="3.5"/>
+  <circle cx="58" cy="10" r="5" fill="none" stroke="#85C2E8" stroke-width="3"/>
+  <circle cx="70" cy="19" r="10" fill="none" stroke="#85C2E8" stroke-width="3.5"/>
+  <circle cx="84" cy="9" r="7" fill="none" stroke="#85C2E8" stroke-width="3"/>
+  <circle cx="94" cy="21" r="9" fill="none" stroke="#3D9BE9" stroke-width="3.5"/>
+  <circle cx="34" cy="34" r="11" fill="none" stroke="#3D9BE9" stroke-width="3.5"/>
+  <circle cx="52" cy="4" r="4" fill="none" stroke="#85C2E8" stroke-width="2.5"/>
+  <g fill="white">
+    <path d="M14 57 L14 81 L48 81 L48 57 Q48 51 42 51 L20 51 Q14 51 14 57Z"/>
+    <rect x="48" y="53" width="56" height="28" rx="2"/>
+    <rect x="12" y="79" width="94" height="5" rx="2.5"/>
+    <circle cx="29" cy="88" r="9"/><circle cx="29" cy="88" r="3.5" fill="rgba(15,33,55,0.4)"/>
+    <circle cx="72" cy="88" r="9"/><circle cx="72" cy="88" r="3.5" fill="rgba(15,33,55,0.4)"/>
+    <circle cx="92" cy="88" r="9"/><circle cx="92" cy="88" r="3.5" fill="rgba(15,33,55,0.4)"/>
+  </g>
+</svg>
       </div>
       <div>
         <div class="logo-name">Camion<span>net</span></div>
@@ -848,11 +841,11 @@
 
 <!-- BOTTOM NAV -->
 <nav class="bnav">
-  <button class="bn active" onclick="showSection('accueil',null,this)"><span class="bn-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="bn-l">Accueil</span></button>
-  <button class="bn" onclick="showSection('contacts',null,this)"><span class="bn-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.56-1.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="bn-l">Contacts</span></button>
-  <button class="bn" onclick="showSection('pratiques',null,this)"><span class="bn-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span><span class="bn-l">Pratiques</span></button>
-  <button class="bn" onclick="showSection('pl99',null,this)"><span class="bn-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span><span class="bn-l">PL99</span></button>
-  <button class="bn" onclick="showSection('defiv',null,this)"><span class="bn-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span class="bn-l">DEFI-V</span></button>
+  <button class="bn active" onclick="showSection('accueil',null,this)"><span class="bn-i"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="bn-l">Accueil</span></button>
+  <button class="bn" onclick="showSection('contacts',null,this)"><span class="bn-i"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.56-1.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span><span class="bn-l">Contacts</span></button>
+  <button class="bn" onclick="showSection('pratiques',null,this)"><span class="bn-i"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span><span class="bn-l">Pratiques</span></button>
+  <button class="bn" onclick="showSection('pl99',null,this)"><span class="bn-i"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span><span class="bn-l">PL99</span></button>
+  <button class="bn" onclick="showSection('defiv',null,this)"><span class="bn-i"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span class="bn-l">DEFI-V</span></button>
 </nav>
 
 <script>

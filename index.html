@@ -2,10 +2,885 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Livret de Bord - Camion Net</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livret de Bord — Camion Net</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1B2D42;
+    --navy-light: #243347;
+    --blue: #1A4B8C;
+    --blue-light: #2E6CC4;
+    --orange: #F4722B;
+    --orange-light: #FF9A62;
+    --orange-pale: #FFF0E8;
+    --teal: #0ABFA3;
+    --teal-pale: #E4FAF7;
+    --yellow: #FFD166;
+    --red: #E63946;
+    --red-pale: #FFF0F0;
+    --gray-50: #F8F9FA;
+    --gray-100: #F1F3F5;
+    --gray-200: #E9ECEF;
+    --gray-400: #ADB5BD;
+    --gray-600: #6C757D;
+    --gray-800: #343A40;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: var(--font-body); background: var(--gray-100); color: var(--navy); min-height:100vh; padding-bottom:80px; }
+
+  /* HEADER */
+  .header { background: var(--navy); position:sticky; top:0; z-index:100; box-shadow:0 2px 16px rgba(0,0,0,0.3); }
+  .header-inner { max-width:700px; margin:0 auto; padding:10px 18px; display:flex; align-items:center; justify-content:space-between; }
+  .logo-wrap { display:flex; align-items:center; gap:10px; }
+  .logo-svg-box { background:white; border-radius:9px; padding:3px 5px; height:42px; width:52px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .logo-name { font-family:var(--font-display); font-weight:700; font-size:17px; color:white; line-height:1.1; }
+  .logo-name span { color:var(--orange); }
+  .logo-sub { font-size:10px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.07em; font-weight:300; }
+  .ver { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.65); font-size:11px; padding:4px 10px; border-radius:20px; }
+
+  /* NAV */
+  .nav-scroll { background:var(--navy-mid); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .nav-scroll::-webkit-scrollbar { display:none; }
+  .nav-tabs { display:flex; padding:0 14px; min-width:max-content; }
+  .nav-tab { padding:10px 15px; font-family:var(--font-body); font-size:12.5px; font-weight:400; color:rgba(255,255,255,0.5); cursor:pointer; border-bottom:2.5px solid transparent; transition:all 0.2s; white-space:nowrap; background:none; border-top:none; border-left:none; border-right:none; }
+  .nav-tab.active, .nav-tab:hover { color:var(--orange); border-bottom-color:var(--orange); }
+
+  /* MAIN */
+  .main { max-width:700px; margin:0 auto; padding:0 14px; }
+  .section { display:none; padding:22px 0; }
+  .section.active { display:block; }
+
+  /* HERO */
+  .hero-card { background:var(--navy); border-radius:var(--radius-lg); padding:26px 22px; margin-bottom:14px; position:relative; overflow:hidden; }
+  .hero-card::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; background:var(--orange); opacity:0.07; border-radius:50%; }
+  .hero-eyebrow { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); margin-bottom:7px; font-weight:500; }
+  .hero-title { font-family:var(--font-display); font-size:27px; font-weight:800; color:white; line-height:1.1; margin-bottom:11px; }
+  .hero-title span { color:var(--orange); }
+  .hero-desc { font-size:13.5px; color:rgba(255,255,255,0.62); line-height:1.65; font-weight:300; }
+  .hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; }
+  .stat-item { background:rgba(255,255,255,0.08); border-radius:var(--radius-sm); padding:11px; text-align:center; }
+  .stat-num { font-family:var(--font-display); font-size:20px; font-weight:700; color:var(--orange); line-height:1; margin-bottom:4px; }
+  .stat-lbl { font-size:10px; color:rgba(255,255,255,0.42); text-transform:uppercase; letter-spacing:0.04em; font-weight:300; }
+
+  /* CARD */
+  .card { background:white; border-radius:var(--radius-lg); padding:18px; margin-bottom:13px; box-shadow:var(--shadow-sm); }
+  .card-header { display:flex; align-items:center; gap:11px; margin-bottom:14px; }
+  .card-icon { width:38px; height:38px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+  .card-icon.orange { background:var(--orange-pale); }
+  .card-icon.teal { background:var(--teal-pale); }
+  .card-icon.navy { background:#E8EBF0; }
+  .card-icon.red { background:var(--red-pale); }
+  .card-icon.blue { background:#E8F0FC; }
+  .card-title { font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--navy); line-height:1.2; }
+  .card-sub { font-size:11.5px; color:var(--gray-600); margin-top:2px; font-weight:300; }
+
+  /* CONTACTS */
+  .contact-card { background:white; border-radius:var(--radius-md); padding:14px 16px; margin-bottom:9px; box-shadow:var(--shadow-sm); display:flex; align-items:flex-start; gap:13px; }
+  .avatar { width:42px; height:42px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:13px; color:white; flex-shrink:0; }
+  .c-name { font-weight:500; font-size:14.5px; color:var(--navy); margin-bottom:2px; }
+  .c-role { font-size:12px; color:var(--gray-600); font-weight:300; margin-bottom:7px; line-height:1.4; }
+  .c-links { display:flex; gap:7px; flex-wrap:wrap; }
+  .c-link { font-size:12px; padding:3px 10px; border-radius:20px; text-decoration:none; font-weight:400; }
+  .c-link.ph { background:var(--orange-pale); color:#B84010; }
+  .c-link.em { background:#EEF3FF; color:#2B3FCC; word-break:break-all; }
+
+  /* STEPS */
+  .step { display:flex; gap:12px; margin-bottom:14px; align-items:flex-start; }
+  .step-n { width:28px; height:28px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:12px; color:white; flex-shrink:0; margin-top:2px; }
+  .step-t { font-weight:500; font-size:13.5px; color:var(--navy); margin-bottom:3px; line-height:1.3; }
+  .step-d { font-size:13px; color:var(--gray-600); line-height:1.6; font-weight:300; }
+
+  /* PILLS */
+  .pill { display:inline-block; padding:4px 11px; border-radius:20px; font-size:11.5px; font-weight:500; margin:2px 2px 2px 0; }
+  .pill.o { background:var(--orange-pale); color:#B84010; }
+  .pill.t { background:var(--teal-pale); color:#087060; }
+  .pill.n { background:#E8EBF0; color:var(--navy); }
+  .pill.r { background:var(--red-pale); color:#A02020; }
+  .pill.b { background:#EEF3FF; color:#1A3A8C; }
+
+  /* ALERTS */
+  .alert { border-radius:var(--radius-sm); padding:12px 15px; margin-bottom:13px; font-size:13px; line-height:1.65; font-weight:400; }
+  .alert.warn { background:#FFF8E0; border-left:3px solid var(--yellow); color:#5A4000; }
+  .alert.danger { background:var(--red-pale); border-left:3px solid var(--red); color:#7A1010; }
+  .alert.info { background:var(--teal-pale); border-left:3px solid var(--teal); color:#086050; }
+  .alert.success { background:#E8F5E9; border-left:3px solid #43A047; color:#1B5E20; }
+  .alert.blue { background:#EEF3FF; border-left:3px solid var(--blue-light); color:#1A3A8C; }
+  .alert strong { color:inherit; font-weight:500; }
+
+  /* TABLES */
+  .tbl-wrap { overflow-x:auto; border-radius:var(--radius-md); border:1px solid var(--gray-200); margin-bottom:13px; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  th { background:var(--navy); color:white; padding:9px 13px; text-align:left; font-weight:500; font-size:11.5px; letter-spacing:0.03em; }
+  td { padding:9px 13px; border-bottom:1px solid var(--gray-100); color:var(--gray-800); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:nth-child(even) td { background:var(--gray-50); }
+  .hl { font-weight:500; color:var(--navy); }
+
+  /* EPI */
+  .epi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:13px; }
+  .epi-item { background:var(--gray-50); border-radius:var(--radius-sm); padding:13px 8px; text-align:center; border:1px solid var(--gray-200); }
+  .epi-icon { font-size:22px; margin-bottom:5px; display:block; }
+  .epi-lbl { font-size:10.5px; color:var(--gray-600); line-height:1.3; }
+
+  /* CHECKLIST */
+  .cl { list-style:none; }
+  .cl li { display:flex; align-items:flex-start; gap:9px; padding:7px 0; border-bottom:1px solid var(--gray-100); font-size:13.5px; color:var(--gray-800); line-height:1.55; }
+  .cl li:last-child { border-bottom:none; }
+  .dot { width:19px; height:19px; border-radius:50%; border:2px solid var(--orange); flex-shrink:0; margin-top:2px; }
+  .dot.t { border-color:var(--teal); }
+  .dot.r { border-color:var(--red); }
+  .dot.b { border-color:var(--blue-light); }
+
+  /* SEC TITLE */
+  .sec-t { font-family:var(--font-display); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--orange); margin-bottom:12px; padding-bottom:7px; border-bottom:1px solid var(--gray-200); }
+
+  /* RULE BLOCKS */
+  .rule { background:white; border-radius:var(--radius-md); padding:15px 17px; margin-bottom:9px; box-shadow:var(--shadow-sm); }
+  .rule-n { font-family:var(--font-display); font-size:10px; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
+  .rule-t { font-weight:500; font-size:14.5px; color:var(--navy); margin-bottom:7px; }
+  .rule-b { font-size:13px; color:var(--gray-600); line-height:1.65; font-weight:300; }
+
+  /* PRODUCT HERO */
+  .prod-hero { background:var(--navy); border-radius:var(--radius-lg); padding:20px 18px; margin-bottom:13px; color:white; position:relative; overflow:hidden; }
+  .prod-hero::after { content:''; position:absolute; bottom:-35px; right:-25px; width:130px; height:130px; border-radius:50%; opacity:0.1; }
+  .prod-hero.po::after { background:var(--orange); }
+  .prod-hero.pt::after { background:var(--teal); }
+  .prod-badge { display:inline-block; padding:3px 11px; border-radius:20px; font-size:10.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:9px; }
+  .prod-badge.o { background:rgba(244,114,43,0.25); color:var(--orange-light); }
+  .prod-badge.t { background:rgba(10,191,163,0.25); color:#4EECD6; }
+  .prod-name { font-family:var(--font-display); font-size:23px; font-weight:800; margin-bottom:5px; }
+  .prod-tag { font-size:12.5px; color:rgba(255,255,255,0.58); font-weight:300; line-height:1.55; margin-bottom:14px; }
+  .prod-specs { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+  .spec { background:rgba(255,255,255,0.08); border-radius:7px; padding:9px; text-align:center; }
+  .spec-v { font-family:var(--font-display); font-size:16px; font-weight:700; line-height:1; margin-bottom:3px; }
+  .spec-v.o { color:var(--orange); }
+  .spec-v.t { color:var(--teal); }
+  .spec-k { font-size:9.5px; color:rgba(255,255,255,0.42); text-transform:uppercase; letter-spacing:0.05em; }
+
+  /* APP CARD */
+  .app-card { background:white; border-radius:var(--radius-lg); padding:16px 18px; margin-bottom:11px; box-shadow:var(--shadow-sm); display:flex; gap:13px; align-items:flex-start; }
+  .app-logo { width:46px; height:46px; border-radius:11px; background:var(--navy); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:var(--font-display); font-weight:800; font-size:11px; color:var(--orange); line-height:1.2; text-align:center; }
+  .app-name { font-weight:600; font-size:14px; color:var(--navy); margin-bottom:3px; font-family:var(--font-display); }
+  .app-desc { font-size:12.5px; color:var(--gray-600); line-height:1.6; font-weight:300; }
+
+  /* INFO ROW */
+  .info-r { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--gray-100); }
+  .info-r:last-child { border-bottom:none; }
+  .i-k { color:var(--gray-600); font-weight:300; font-size:12.5px; }
+  .i-v { color:var(--navy); font-weight:500; font-size:12.5px; text-align:right; flex-shrink:0; margin-left:10px; }
+
+  /* DIVIDER */
+  .div { height:1px; background:var(--gray-200); margin:14px 0; }
+
+  /* DETAILS */
+  details { background:white; border-radius:var(--radius-md); margin-bottom:9px; box-shadow:var(--shadow-sm); overflow:hidden; }
+  summary { padding:14px 16px; cursor:pointer; font-weight:500; font-size:13.5px; color:var(--navy); list-style:none; display:flex; align-items:center; justify-content:space-between; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:'+'; font-size:17px; color:var(--orange); font-weight:400; flex-shrink:0; }
+  details[open] summary::after { content:'−'; }
+  .det-b { padding:0 16px 14px; font-size:13px; color:var(--gray-600); line-height:1.7; border-top:1px solid var(--gray-100); font-weight:300; }
+  .det-b p { margin-bottom:8px; }
+  .det-b p:last-child { margin-bottom:0; }
+  .det-b ol { padding-left:16px; line-height:2.1; }
+  .det-b strong { color:var(--navy); font-weight:500; }
+
+  /* FOOTER */
+  .footer { background:var(--navy); padding:15px 18px; margin-top:22px; border-radius:var(--radius-lg); text-align:center; }
+  .footer p { font-size:11.5px; color:rgba(255,255,255,0.38); line-height:1.8; font-weight:300; }
+  .footer strong { color:rgba(255,255,255,0.65); font-weight:500; }
+
+  /* BOTTOM NAV */
+  .bnav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid var(--gray-200); padding:7px 0 max(7px, env(safe-area-inset-bottom)); display:flex; justify-content:space-around; z-index:200; box-shadow:0 -3px 16px rgba(0,0,0,0.08); }
+  .bn { display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; padding:3px 6px; border-radius:7px; transition:all 0.2s; background:none; border:none; }
+  .bn:hover, .bn.active { background:var(--orange-pale); }
+  .bn-i { font-size:19px; line-height:1; }
+  .bn-l { font-size:9.5px; color:var(--gray-600); font-family:var(--font-body); }
+  .bn.active .bn-l { color:var(--orange); }
+
+  .tag-row { margin-bottom:13px; }
+  .urg { font-family:var(--font-display); font-size:22px; font-weight:800; color:var(--red); }
+
+  .card p, .det-b p { font-size:13.5px; line-height:1.75; color:var(--gray-600); font-weight:300; }
+  .card p strong { color:var(--navy); font-weight:500; }
+
+  @media(max-width:420px) {
+    .hero-title { font-size:22px; }
+    .prod-name { font-size:20px; }
+    .stat-num { font-size:18px; }
+  }
+</style>
 </head>
 <body>
-<h1>Test upload GitHub</h1>
-<p>Contenu complet en cours de chargement...</p>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <!-- Logo fidèle au logo Camionnet officiel : camion + bulles -->
+      <div class="logo-svg-box">
+        <svg width="40" height="34" viewBox="0 0 100 86" xmlns="http://www.w3.org/2000/svg">
+          <!-- Bulles bleues au-dessus du camion -->
+          <circle cx="28" cy="14" r="7" fill="#2E6CC4" opacity="0.9"/>
+          <circle cx="43" cy="6" r="9.5" fill="#2E6CC4" opacity="0.85"/>
+          <circle cx="60" cy="10" r="6" fill="#2E6CC4" opacity="0.9"/>
+          <circle cx="74" cy="5" r="5" fill="#2E6CC4" opacity="0.75"/>
+          <!-- Pare-buffle avant -->
+          <rect x="6" y="44" width="4" height="20" rx="2" fill="#0D1B2A"/>
+          <!-- Cabine -->
+          <rect x="10" y="38" width="26" height="26" rx="3" fill="#1A2E4A"/>
+          <!-- Pare-brise cabine -->
+          <rect x="14" y="41" width="17" height="13" rx="2" fill="#4A90D9" opacity="0.8"/>
+          <!-- Phare avant -->
+          <rect x="10" y="44" width="5" height="5" rx="1" fill="#FFD166"/>
+          <!-- Caisse / remorque -->
+          <rect x="36" y="42" width="54" height="22" rx="2" fill="#1A2E4A"/>
+          <!-- Bande déco caisse -->
+          <rect x="36" y="56" width="54" height="4" rx="1" fill="#2E6CC4" opacity="0.5"/>
+          <!-- Plancher -->
+          <rect x="8" y="64" width="82" height="4" rx="2" fill="#0D1B2A"/>
+          <!-- Roue avant -->
+          <circle cx="22" cy="70" r="9" fill="#1A2E4A"/>
+          <circle cx="22" cy="70" r="5" fill="#6A8CAA"/>
+          <circle cx="22" cy="70" r="2" fill="#1A2E4A"/>
+          <!-- Roue arrière gauche -->
+          <circle cx="57" cy="70" r="9" fill="#1A2E4A"/>
+          <circle cx="57" cy="70" r="5" fill="#6A8CAA"/>
+          <circle cx="57" cy="70" r="2" fill="#1A2E4A"/>
+          <!-- Roue arrière droite -->
+          <circle cx="76" cy="70" r="9" fill="#1A2E4A"/>
+          <circle cx="76" cy="70" r="5" fill="#6A8CAA"/>
+          <circle cx="76" cy="70" r="2" fill="#1A2E4A"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name">Camion<span>net</span></div>
+        <div class="logo-sub">Livret de Bord · by LZ net</div>
+      </div>
+    </div>
+    <div class="ver">2026</div>
+  </div>
+  <nav class="nav-scroll">
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('accueil',this)">🏠 Accueil</button>
+      <button class="nav-tab" onclick="showSection('contacts',this)">📞 Contacts</button>
+      <button class="nav-tab" onclick="showSection('pratiques',this)">✅ Pratiques</button>
+      <button class="nav-tab" onclick="showSection('pl99',this)">🟧 PL99-AL</button>
+      <button class="nav-tab" onclick="showSection('defiv',this)">🟦 DEFI-V.SID</button>
+      <button class="nav-tab" onclick="showSection('reglement',this)">📋 Règlement</button>
+      <button class="nav-tab" onclick="showSection('materiel',this)">🔧 Matériel</button>
+    </div>
+  </nav>
+</header>
+
+<main class="main">
+
+<!-- ═══════════════════════════════ ACCUEIL ═══════════════════════════════ -->
+<section id="accueil" class="section active">
+  <div class="hero-card">
+    <div class="hero-eyebrow">Bienvenue chez</div>
+    <h1 class="hero-title">Camion<span>net</span><br>Votre guide terrain</h1>
+    <p class="hero-desc">Ce Livret de Bord est conçu pour aider l'ensemble des salariés — en particulier les nouveaux entrants — à s'approprier l'histoire, la culture et les ambitions de l'entreprise, ses procédures internes et ses usages. Il devient une référence utile, un guide fiable et accessible à l'ensemble des équipes.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">25+</div><div class="stat-lbl">Unités mobiles HP</div></div>
+      <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Collaborateurs</div></div>
+      <div class="stat-item"><div class="stat-num">130K</div><div class="stat-lbl">Véhicules/an</div></div>
+    </div>
+  </div>
+
+  <p class="sec-t">Mot du dirigeant & présentation</p>
+  <div class="card">
+    <p>Fondée en <strong>2002 par Sébastien Zabner</strong>, professionnel du transport et de la logistique, Camion Net est une entreprise française spécialisée dans le <strong>lavage industriel de véhicules</strong>. Depuis plus de vingt ans, la société accompagne les acteurs du transport, de la logistique, de l'agroalimentaire et de l'industrie en leur proposant des solutions de nettoyage performantes, adaptées à leurs contraintes opérationnelles et réglementaires.</p>
+    <div class="div"></div>
+    <p>L'activité historique repose sur le <strong>lavage mobile de camions</strong> : nos équipes interviennent directement sur les sites de nos clients, pendant les temps d'immobilisation des véhicules, afin d'optimiser leur disponibilité et de réduire les coûts liés aux déplacements vers des stations de lavage externes. Ce mode d'intervention permet d'assurer un entretien régulier, suivi et maîtrisé des flottes de poids lourds, camions frigorifiques, semi-remorques et véhicules utilitaires légers.</p>
+    <div class="div"></div>
+    <p>En complément, Camion Net dispose d'un <strong>centre fixe de lavage à Rungis</strong>, au cœur du Marché d'Intérêt National. Ce site stratégique répond aux besoins spécifiques des grands pôles logistiques et des professionnels soumis à des exigences élevées en matière d'hygiène, notamment dans le secteur alimentaire.</p>
+    <div class="div"></div>
+    <p>Au fil des années, Camion Net a étendu son expertise bien au-delà du lavage de véhicules. L'entreprise propose aujourd'hui des prestations de nettoyage conformes aux normes d'hygiène et de sécurité les plus strictes, pour les environnements industriels, agroalimentaires, les véhicules de transport en commun, les bâtiments industriels, les chambres froides et les infrastructures techniques.</p>
+    <div class="div"></div>
+    <p>Avec une flotte de <strong>25 unités mobiles haute pression</strong>, plus de <strong>50 collaborateurs</strong> et une présence dans <strong>75 départements</strong>, Camion Net assure une couverture nationale homogène. Chaque année, plus de <strong>130 000 véhicules</strong> sont entretenus par nos soins, témoignant de la confiance durable accordée par nos clients. La propreté est au cœur de l'ADN de Camion Net : processus standardisés, traçabilité rigoureuse, produits et techniques uniformes sur l'ensemble du territoire.</p>
+  </div>
+
+  <p class="sec-t">Pourquoi ce livret ?</p>
+  <div class="card">
+    <p style="margin-bottom:12px;">Ce document doit évoluer au fil du temps pour accompagner le salarié tout au long de sa vie professionnelle. Il devient alors une référence utile, un guide fiable et accessible. Avec les possibilités offertes par le numérique, il peut prendre des formes variées (vidéos, webinars) facilitant l'appropriation des outils et démarches internes.</p>
+    <ul class="cl">
+      <li><div class="dot"></div><span>Procédures de lavage et fiches produits à portée de main</span></li>
+      <li><div class="dot"></div><span>Contacts internes classés par domaine</span></li>
+      <li><div class="dot"></div><span>Bonnes pratiques terrain et outils numériques obligatoires</span></li>
+      <li><div class="dot t"></div><span>Règlement intérieur complet</span></li>
+      <li><div class="dot t"></div><span>Suivi et entretien du véhicule et du matériel</span></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p><strong>CAMION NET — SAS LZ NET</strong><br>8, rue du chêne fourchet — 72440 BOULOIRE<br>Tél / Fax : 02 43 63 31 50 · Portable : 06 64 48 47 64<br>contact@camionnet.fr · www.camionnet.fr<br>APE 4520B · Capital 100 000 € · SIRET RCS 44205197500039 · TVA n°FR67442051975</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════ CONTACTS ═══════════════════════════════ -->
+<section id="contacts" class="section">
+  <div class="alert blue">Pour simplifier vos échanges, référez-vous aux contacts ci-dessous selon la nature de votre demande. En cas de doute opérationnel, commencez toujours par l'<strong>Exploitation</strong>.</div>
+
+  <p class="sec-t">Direction générale · Commercial · Achats</p>
+  <div class="contact-card">
+    <div class="avatar" style="background:var(--navy);">SZ</div>
+    <div style="flex:1;min-width:0;">
+      <div class="c-name">Sébastien Zabner</div>
+      <div class="c-role">Direction générale et commerciale — Responsable achats</div>
+      <div class="c-links">
+        <a href="tel:0664484764" class="c-link ph">📞 06 64 48 47 64</a>
+        <a href="mailto:camion.net.seb@wanadoo.fr" class="c-link em">camion.net.seb@wanadoo.fr</a>
+      </div>
+    </div>
+  </div>
+  <div class="contact-card">
+    <div class="avatar" style="background:#4A6FD4;">FB</div>
+    <div style="flex:1;min-width:0;">
+      <div class="c-name">Fabien Buchheit</div>
+      <div class="c-role">Responsable commercial et stratégique — Support digitaux (application, site, Zettle, Wix RDV Rungis)</div>
+      <div class="c-links">
+        <a href="tel:0680936131" class="c-link ph">📞 06 80 93 61 31</a>
+        <a href="mailto:contact@camionnet.fr" class="c-link em">contact@camionnet.fr</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-t">Ressources humaines & administratif</p>
+  <div class="contact-card">
+    <div class="avatar" style="background:var(--teal);">LM</div>
+    <div style="flex:1;min-width:0;">
+      <div class="c-name">Leylla Miard</div>
+      <div class="c-role">Ressources humaines et administratif</div>
+      <div class="c-links"><a href="mailto:leylla@wanadoo.fr" class="c-link em">leylla@wanadoo.fr</a></div>
+    </div>
+  </div>
+
+  <p class="sec-t">Exploitation & Qualité France</p>
+  <div class="contact-card">
+    <div class="avatar" style="background:#2E7D32;">FD</div>
+    <div style="flex:1;min-width:0;">
+      <div class="c-name">Franck Doiteaux</div>
+      <div class="c-role">Exploitation & Qualité France — <strong style="color:var(--red);">Référent tout incident terrain</strong></div>
+      <div class="c-links">
+        <a href="tel:0699560640" class="c-link ph">📞 06 99 56 06 40</a>
+        <a href="mailto:exploitation@camionnet.fr" class="c-link em">exploitation@camionnet.fr</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-t">Responsable centre de lavage Rungis</p>
+  <div class="contact-card">
+    <div class="avatar" style="background:#7B1FA2;">ML</div>
+    <div style="flex:1;min-width:0;">
+      <div class="c-name">Marc Lavergne</div>
+      <div class="c-role">Responsable centre de lavage — Rungis (MIN)</div>
+      <div class="c-links">
+        <a href="tel:0621617173" class="c-link ph">📞 06 21 61 71 73</a>
+        <a href="mailto:rungis@camionnet.fr" class="c-link em">rungis@camionnet.fr</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-t">Responsable Martin Brower</p>
+  <div class="contact-card">
+    <div class="avatar" style="background:#E65100;">JB</div>
+    <div style="flex:1;min-width:0;">
+      <div class="c-name">Julien Boulanger</div>
+      <div class="c-role">Responsable Martin Brower</div>
+      <div class="c-links"><a href="tel:0770622913" class="c-link ph">📞 07 70 62 29 13</a></div>
+    </div>
+  </div>
+
+  <p class="sec-t">Urgences & numéros utiles</p>
+  <div class="card">
+    <div class="info-r"><div class="i-k">🚑 SAMU</div><div class="i-v"><span class="urg">15</span></div></div>
+    <div class="info-r"><div class="i-k">🚒 Pompiers</div><div class="i-v"><span class="urg">18</span></div></div>
+    <div class="info-r"><div class="i-k">🚔 Police / Gendarmerie</div><div class="i-v"><span class="urg">17</span></div></div>
+    <div class="info-r"><div class="i-k">☎️ Urgences Europe</div><div class="i-v"><span class="urg">112</span></div></div>
+    <div class="info-r"><div class="i-k">☠️ Centre antipoison (INRS/ORFILA)</div><div class="i-v" style="font-weight:600;font-size:14px;color:var(--red);">01 45 42 59 59</div></div>
+  </div>
+
+  <div class="footer"><p><strong>CAMION NET</strong> · 8, rue du chêne fourchet — 72440 BOULOIRE · Tél : 02 43 63 31 50 · contact@camionnet.fr · www.camionnet.fr</p></div>
+</section>
+
+
+<!-- ═══════════════════════════════ PRATIQUES ═══════════════════════════════ -->
+<section id="pratiques" class="section">
+  <div class="alert info">Ces bonnes pratiques s'appliquent à <strong>toutes les interventions</strong>. Leur respect conditionne la qualité du service rendu à nos clients.</div>
+
+  <p class="sec-t">1 · Outils et applications</p>
+  <div class="app-card">
+    <div class="app-logo">CAM<br>NET</div>
+    <div>
+      <div class="app-name">app.camionnet / agent</div>
+      <div class="app-desc">Consultation du planning d'intervention si nécessaire · Saisie quotidienne de l'activité (lavages réalisés). Mot de passe et identifiant envoyés individuellement. <strong>Utilisation quotidienne obligatoire.</strong></div>
+    </div>
+  </div>
+  <div class="app-card">
+    <div class="app-logo" style="background:var(--teal);color:white;font-size:11px;">SKL<br>LO</div>
+    <div>
+      <div class="app-name">Skello — Application RH</div>
+      <div class="app-desc">Consultation et modification du planning · Badgeuse géolocalisée (présences) · Demandes CP et absences · Accès aux documents (contrat, mutuelle, fiches de paie, attestations). <strong>Support unique et obligatoire pour toutes les demandes RH.</strong></div>
+    </div>
+  </div>
+  <div class="app-card">
+    <div class="app-logo" style="background:#2E7D32;color:white;font-size:10px;">CAM<br>.FR</div>
+    <div>
+      <div class="app-name">camionnet.fr — Espace collaborateurs</div>
+      <div class="app-desc">Support unique et obligatoire pour : demandes d'entretien ou de réparation des véhicules · demandes de matériel et consommables. <strong>Aucune demande réalisée hors de ces supports ne sera recevable.</strong></div>
+    </div>
+  </div>
+
+  <p class="sec-t">2 · Gestion des congés et absences</p>
+  <div class="card">
+    <ul class="cl">
+      <li><div class="dot"></div><span>Toute demande de congé doit passer par <strong>Skello</strong>, au minimum <strong>1 mois avant</strong> la date souhaitée</span></li>
+      <li><div class="dot"></div><span>Une demande ne vaut <strong>pas</strong> validation — délai de validation : 1 semaine après la demande</span></li>
+      <li><div class="dot"></div><span>Chaque demande fait l'objet d'une <strong>validation Skello</strong> + communication écrite des RH au service concerné si nécessaire</span></li>
+      <li><div class="dot r"></div><span>Toute absence non autorisée ou non justifiée peut constituer une <strong>faute disciplinaire</strong></span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">3 · Communication opérationnelle</p>
+  <div class="card">
+    <ul class="cl">
+      <li><div class="dot r"></div><span>Toute <strong>modification de planning</strong> → communiquer immédiatement au Responsable d'Exploitation · informer le client · trouver une solution alternative (sauf contre-indication du RE)</span></li>
+      <li><div class="dot r"></div><span>Tout <strong>incident chez un client</strong> → remonter immédiatement au Responsable d'Exploitation · traiter selon les consignes qu'il fixe</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">4 · Responsabilité individuelle</p>
+  <div class="card">
+    <p style="margin-bottom:12px;">Chaque salarié ou prestataire est responsable de son matériel et de ses équipements. Chaque véhicule doit disposer obligatoirement :</p>
+    <ul class="cl">
+      <li><div class="dot"></div><span><strong>Matériel en double :</strong> nettoyeur HP · flexibles · pistolet · lance · joints · brosse · manche · raclette — tous en état de fonctionnement</span></li>
+      <li><div class="dot"></div><span><strong>Stock suffisant</strong> pour pallier toute défaillance : PL99-AL · DEFI-V.SID et autres produits nécessaires aux missions confiées</span></li>
+      <li><div class="dot"></div><span><strong>EPI complets :</strong> chaussures ou bottes de sécurité · masque pour les composés organiques volatiles · gilet ou vêtement haute visibilité · gants nitrile · lunettes/masque/visière de protection · tenue imperméable bas (projection de produit pur)</span></li>
+      <li><div class="dot t"></div><span><strong>Pack documents :</strong> liste outils/fournitures/EPI · Livret de Bord</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">5 · Bonnes pratiques chez le client (intervention sur site)</p>
+  <div class="card">
+    <div class="step"><div class="step-n">1</div><div><div class="step-t">Arriver avec les EPI obligatoires</div><div class="step-d">Gilet haute visibilité + chaussures de sécurité dès le franchissement du portail.</div></div></div>
+    <div class="step"><div class="step-n">2</div><div><div class="step-t">Se présenter au référent et signaler notre arrivée</div><div class="step-d">Prendre les consignes auprès de l'exploitation : sécurité, circulation, consignes d'intervention.</div></div></div>
+    <div class="step"><div class="step-n">3</div><div><div class="step-t">Préparer la zone de lavage</div><div class="step-d">Selon les recommandations du client. Signaler immédiatement tout problème rencontré (sécurité, accès, matériel, véhicule…).</div></div></div>
+    <div class="step"><div class="step-n">4</div><div><div class="step-t">Réaliser la prestation</div><div class="step-d">Respecter strictement les consignes de sécurité pendant toute l'intervention.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">5</div><div><div class="step-t">Fin de prestation : faire signer le bon</div><div class="step-d">Faire signer le bon de prestation par un représentant du client et, si possible, le faire tamponner. Conserver un exemplaire pour l'entreprise. Remettre un exemplaire au client si prévu. Avertir le référent de notre départ.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">6</div><div><div class="step-t">Badger départ + enregistrement app Camion Net</div><div class="step-d">Badger au départ du site sur Skello · Enregistrer la prestation dans l'application Camion Net en utilisant l'outil de prise de photographies — avant de quitter le site du client.</div></div></div>
+  </div>
+
+  <div class="alert warn">Les clients disposent d'un accès direct à leurs prestations via l'intranet. La qualité et l'exactitude des informations saisies est <strong>essentielle</strong> pour la transparence et la relation commerciale.</div>
+
+  <div class="footer"><p><strong>CAMION NET</strong> · contact@camionnet.fr · www.camionnet.fr</p></div>
+</section>
+
+
+<!-- ═══════════════════════════════ PL99-AL ═══════════════════════════════ -->
+<section id="pl99" class="section">
+  <div class="prod-hero po">
+    <div class="prod-badge o">🟧 Produit 1 — ABAX · Réf. 0108-2801</div>
+    <div class="prod-name">SHAMPOOING HP PL99-AL</div>
+    <div class="prod-tag">Lavage — Nettoyage extérieurs véhicules & intérieurs caisses classiques<br>Produit alcalin polyvalent économique concentré · Soluble en eau froide · Qualité alimentaire</div>
+    <div class="prod-specs">
+      <div class="spec"><div class="spec-v o">pH 13</div><div class="spec-k">pH pur à 20°C</div></div>
+      <div class="spec"><div class="spec-v o">1,14</div><div class="spec-k">Densité 20°C</div></div>
+      <div class="spec"><div class="spec-v o">Jaune clair</div><div class="spec-k">Couleur · Liquide limpide</div></div>
+    </div>
+  </div>
+
+  <p class="sec-t">Domaines d'application</p>
+  <div class="card">
+    <div class="tag-row">
+      <span class="pill o">Poids lourds</span><span class="pill o">Autobus</span><span class="pill o">Bâches de camion</span>
+      <span class="pill n">Matériel agricole</span><span class="pill n">Carrosseries automobiles</span><span class="pill n">Caisses frigorifiques (intérieur)</span>
+    </div>
+    <div class="alert warn" style="margin-top:8px;margin-bottom:0;">
+      <strong>⚠️ Déconseillé</strong> sur véhicules deux-roues et toutes parties revêtues : chromes, aciers galvanisés, aluminiums. Procéder à un essai préalable sur une petite surface ou privilégier des nettoyants neutres (consultez Abax). En cas de passage en amont du circuit HP eau chaude, utiliser de préférence le SHAMPOOING HP 2000 ou HP 3000.
+    </div>
+  </div>
+
+  <p class="sec-t">Tableau de dilution PL99-AL — Obligatoire</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Usage</th><th>Dilution</th><th>Ratio / notes</th></tr></thead>
+      <tbody>
+        <tr><td>Nettoyage par pulvérisation (le plus courant)</td><td class="hl">5 à 10 %</td><td>Pulvériser bas→haut · agir 3–5 min · rincer HP</td></tr>
+        <tr><td>Nettoyage intensif (salissures importantes)</td><td class="hl">10 % (1:10)</td><td>—</td></tr>
+        <tr><td>Nettoyage régulier</td><td class="hl">5 % (1:20)</td><td>—</td></tr>
+        <tr><td>Nettoyage manuel (seau)</td><td class="hl">2 à 4 %</td><td>Laver au gant · rincer</td></tr>
+        <tr><td>Nettoyeur HP à froid (bac intégré)</td><td class="hl">2 à 3 %</td><td>Régler débit en sortie buse · aspersion bas→haut BP · rincer haut→bas</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert info" style="margin-bottom:13px;">💧 Après utilisation, préconiser l'emploi de l'<strong>AUTOSECHANT VIT'SEC</strong> pour finition optimale.</div>
+
+  <p class="sec-t">EPI obligatoires — PL99-AL</p>
+  <div class="epi-grid">
+    <div class="epi-item"><span class="epi-icon">🧤</span><div class="epi-lbl">Gants protection (Latex, PVC, Nitrile, Néoprène)</div></div>
+    <div class="epi-item"><span class="epi-icon">🥽</span><div class="epi-lbl">Lunettes / visière (NF EN166)</div></div>
+    <div class="epi-item"><span class="epi-icon">🦺</span><div class="epi-lbl">Gilet haute visibilité</div></div>
+    <div class="epi-item"><span class="epi-icon">👢</span><div class="epi-lbl">Bottes / chaussures étanches</div></div>
+    <div class="epi-item"><span class="epi-icon">🥼</span><div class="epi-lbl">Tenue couvrante imperméable</div></div>
+    <div class="epi-item"><span class="epi-icon">🙌</span><div class="epi-lbl">Laver les mains après utilisation</div></div>
+  </div>
+  <div class="alert danger"><strong>🔴 Danger H314</strong> — Corrosion cutanée Cat.1 (H314) · Lésions oculaires graves Cat.1 (H318). GHS05. <strong>P280</strong> : Porter gants, vêtements de protection, équipement de protection des yeux/visage. Enlever et laver les vêtements contaminés avant réutilisation. Prévoir fontaines oculaires dans les ateliers. Contact FDS : fds-msds@abax.eu · Urgence : 01 45 42 59 59</div>
+
+  <p class="sec-t">Procédure — Lavage intérieur caisse frigorifique (PL99)</p>
+  <div class="card">
+    <div class="card-header"><div class="card-icon orange">🏠</div><div><div class="card-title">Intérieur caisse — Savon PL99</div><div class="card-sub">Matériel : savon PL99 · pulvériseur BP ou mousseur HP · laveuse HP · bassine · EPI complets</div></div></div>
+    <div class="step"><div class="step-n">1</div><div><div class="step-t">Préparation du lieu et du matériel</div><div class="step-d">Vérifier que la caisse est vide et exempte de déchets ou restes alimentaires. Éteindre les équipements électriques, protéger les éléments sensibles (panneaux de commande). S'assurer que la zone dispose d'un système d'évacuation des eaux usées conforme à la réglementation.</div></div></div>
+    <div class="step"><div class="step-n">2</div><div><div class="step-t">Préparation de la solution — ⚠️ Voir tableau dilution obligatoire</div><div class="step-d">Diluer dans eau tiède ou froide : <strong>1:10 pour nettoyage intensif</strong> (salissures importantes) · <strong>1:20 pour nettoyage régulier</strong>. Remplir le pulvériseur ou le mousseur.</div></div></div>
+    <div class="step"><div class="step-n">3</div><div><div class="step-t">Application du produit</div><div class="step-d">Pulvériser sur toutes les surfaces intérieures : murs, sol, plafond et portes. Insister sur les coins, les joints et les zones incrustées. <strong>Laisser agir 5 à 10 minutes sans laisser sécher.</strong></div></div></div>
+    <div class="step"><div class="step-n">4</div><div><div class="step-t">Nettoyage mécanique</div><div class="step-d">Frotter avec une brosse ou éponge. Utiliser un balai de lavage pour les zones en hauteur.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">5</div><div><div class="step-t">Rinçage HP (haut → bas)</div><div class="step-d">Rincer abondamment à l'eau claire à la laveuse HP, du haut vers le bas. Éliminer tous les résidus de savon, surtout sur les joints et les angles.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">6</div><div><div class="step-t">Séchage et désinfection si nécessaire</div><div class="step-d">Évacuer l'eau à la raclette. Laisser les portes ouvertes pour séchage à l'air libre ou utiliser un souffleur d'air. Si requis, appliquer un désinfectant spécifique après séchage complet.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">7</div><div><div class="step-t">Contrôle final et enregistrement</div><div class="step-d">Vérifier la propreté visuelle (absence de traces, coulures, dépôts). S'assurer que toutes les zones (parois, angles, plafond, portes) ont été traitées. <strong>Enregistrer l'intervention sur le bon de lavage / suivi intranet.</strong></div></div></div>
+  </div>
+
+  <p class="sec-t">Procédure — Lavage extérieur caisse frigorifique (PL99)</p>
+  <div class="card">
+    <div class="card-header"><div class="card-icon orange">🚛</div><div><div class="card-title">Extérieur caisse & carrosserie — Savon PL99</div><div class="card-sub">Matériel : PL99 · mousseur HP ou pulvériseur BP · brosse télescopique poils doux · laveuse HP (chaude de préférence)</div></div></div>
+    <div class="step"><div class="step-n">1</div><div><div class="step-t">Préparation du matériel</div><div class="step-d">Vérifier système d'évacuation eaux grises conforme. Diluer PL99 : <strong>1:10</strong> (saleté incrustée) · <strong>1:20</strong> (lavage courant ou saleté modérée).</div></div></div>
+    <div class="step"><div class="step-n">2</div><div><div class="step-t">Rinçage préliminaire</div><div class="step-d">Rincer à l'eau claire HP pour enlever poussière, boue, salissures en surface. Insister sur les bas de caisse, les roues et les zones les plus exposées.</div></div></div>
+    <div class="step"><div class="step-n">3</div><div><div class="step-t">Application savon (bas → haut)</div><div class="step-d">Pulvériser la solution uniformément sur toutes les surfaces extérieures : parois latérales, portes arrière, pare-chocs. <strong>Laisser agir 3 à 5 minutes pour dissoudre graisses et salissures, sans laisser sécher.</strong></div></div></div>
+    <div class="step"><div class="step-n">4</div><div><div class="step-t">Nettoyage mécanique (haut → bas)</div><div class="step-d">Brosse télescopique pour frotter les surfaces. Insister sur les zones difficiles d'accès et les taches persistantes.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">5</div><div><div class="step-t">Rinçage final HP + contrôle</div><div class="step-d">Vérifier l'absence totale de traces de savon. S'assurer que les parties sensibles (rétroviseurs, joints, plaques signalétiques) sont propres et non endommagées.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">6</div><div><div class="step-t">Séchage et contrôle final</div><div class="step-d">Séchage à l'air libre ou chiffon microfibre pour zones sensibles (fenêtres, rétroviseurs). Vérifier surfaces propres, brillantes, sans résidus. Inspecter bas de caisse et zones autour des roues. <strong>Enregistrer sur le bon de lavage / suivi intranet.</strong></div></div></div>
+  </div>
+
+  <div class="alert warn"><strong>⚠️ Précautions supplémentaires PL99 :</strong> Toujours porter les EPI. Éviter les surfaces sensibles sans essai préalable. Système d'évacuation eaux grises conforme obligatoire. Après utilisation recommander l'<strong>AUTOSECHANT VIT'SEC</strong>.</div>
+
+  <p class="sec-t">Conditionnement & stockage</p>
+  <div class="card">
+    <div class="info-r"><div class="i-k">01085</div><div class="i-v">Bidon plastique 5 kg</div></div>
+    <div class="info-r"><div class="i-k">010820</div><div class="i-v">Bidon plastique 20 kg</div></div>
+    <div class="info-r"><div class="i-k">0108210</div><div class="i-v">Fût 210 kg</div></div>
+    <div class="info-r"><div class="i-k">01081000</div><div class="i-v">Container 1 000 kg</div></div>
+    <div class="info-r"><div class="i-k">❄️ Stockage</div><div class="i-v" style="color:var(--blue-light);">Stocker à l'abri du gel</div></div>
+    <div class="info-r"><div class="i-k">Révision FT</div><div class="i-v">21/09/2020</div></div>
+  </div>
+
+  <div class="footer"><p><strong>ABAX Industries</strong> · 9 Voie de Seine · 94290 Villeneuve-Le-Roi · Tel : 01.49.61.91.95 · www.abax.eu · fds-msds@abax.eu · SIRET : 62200089100037 · Réf. 0108-2801</p></div>
+</section>
+
+
+<!-- ═══════════════════════════════ DEFI-V ═══════════════════════════════ -->
+<section id="defiv" class="section">
+  <div class="prod-hero pt">
+    <div class="prod-badge t">🟦 Produit 2 — SID France · Code B21 · FDS Réf. PS 2573</div>
+    <div class="prod-name">DEFI-V.SID</div>
+    <div class="prod-tag">Shampooing intérieur & extérieur pour camions frigorifiques · Hygiène bactéricide<br>Réservé à usage professionnel · Biocide TP2 et TP4 · Inventaire n°37483<br>Contient : Chlorure de Didécyldiméthylammonium = 5 g/L · pH pur 13,5 (13–14) · pH dilué à 5 % : 12,5</div>
+    <div class="prod-specs">
+      <div class="spec"><div class="spec-v t">pH 13,5</div><div class="spec-k">pH pur (13–14)</div></div>
+      <div class="spec"><div class="spec-v t">1 140</div><div class="spec-k">kg/m³ densité</div></div>
+      <div class="spec"><div class="spec-v t">Citron</div><div class="spec-k">Parfum · Liquide ambré</div></div>
+    </div>
+  </div>
+
+  <p class="sec-t">Certifications & normes</p>
+  <div class="card">
+    <div class="tag-row">
+      <span class="pill t">EN 1276 — Bactéricide</span><span class="pill t">EN 14476+A2 — Virucide</span><span class="pill t">COVID-19</span>
+      <span class="pill n">TP2 — Désinfectants surfaces</span><span class="pill n">TP4 — Denrées alimentaires</span>
+      <span class="pill b">ISO 9001 · ISO 14001</span><span class="pill n">Arrêté 08/09/1999 (v.c. 01/01/2014)</span>
+    </div>
+    <div class="div"></div>
+    <p style="font-size:12.5px;"><strong>Activité microbiologique :</strong> bactéricide selon EN 1276 à 2 %, en 5 min, à 20°C, en conditions de saleté sur <em>Staphylococcus aureus, Pseudomonas aeruginosa, Escherichia coli, Enterococcus hirae</em>. Virucidie partielle selon EN 14476+A2 à 2 %, en 15 min, à 20°C, sur virus de la vaccine (souche Elstree).</p>
+  </div>
+
+  <p class="sec-t">Domaines d'utilisation</p>
+  <div class="card">
+    <div class="tag-row">
+      <span class="pill t">Camions frigorifiques (int. & ext.)</span><span class="pill t">Tracteurs & remorques</span>
+      <span class="pill t">Châssis · bâches · bardages</span><span class="pill n">Transport logistique · entrepôts</span>
+      <span class="pill n">Agroalimentaire · maraîchers</span><span class="pill n">Transports maritimes</span>
+      <span class="pill n">Laboratoires culinaires · évènementiels</span><span class="pill n">Sociétés de location de matériels</span>
+    </div>
+    <p style="font-size:12.5px;margin-top:10px;">Élimine efficacement : film routier, salissures routières, fumées, gasoil, graisses, pollutions diverses, boues, résidus de déverglaçage, souillures animales ou végétales, sang, microorganismes.</p>
+  </div>
+
+  <p class="sec-t">Tableau de dilution DEFI-V.SID — Obligatoire</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Usage</th><th>Dilution</th><th>Temps de contact</th></tr></thead>
+      <tbody>
+        <tr><td>Tout-en-1 (tracteur + remorque)</td><td class="hl">2 %</td><td>5 min puis rinçage HP</td></tr>
+        <tr><td><strong>Action bactéricide (EN 1276)</strong></td><td class="hl">≥ 2 %</td><td><strong>5 min minimum</strong></td></tr>
+        <tr><td><strong>Action virucide (EN 14476)</strong></td><td class="hl">≥ 2 %</td><td><strong>15 min minimum</strong></td></tr>
+        <tr><td>Shampooing (salissures tenaces)</td><td class="hl">5 % (8–10 % si très tenaces)</td><td>Puis rinçage HP</td></tr>
+        <tr><td>Portique automatique</td><td class="hl">0,8 à 1,5 %</td><td>Régler pompe sortie jet</td></tr>
+        <tr><td>Nettoyant sol & parois</td><td class="hl">0,8 à 2 %</td><td>Temps d'action puis HP</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert info">💡 Si les conditions bactéricide (2 %, 5 min) et virucide (2 %, 15 min) sont respectées, <strong>l'action biocide peut être réalisée en même temps que la phase de nettoyage — 1 seule opération.</strong></div>
+
+  <p class="sec-t">EPI obligatoires — DEFI-V.SID</p>
+  <div class="epi-grid">
+    <div class="epi-item"><span class="epi-icon">🧤</span><div class="epi-lbl">Gants PVC · Nitrile · Latex (EN 374)</div></div>
+    <div class="epi-item"><span class="epi-icon">🥽</span><div class="epi-lbl">Lunettes anti-éclaboussures (EN 166)</div></div>
+    <div class="epi-item"><span class="epi-icon">🦺</span><div class="epi-lbl">Gilet haute visibilité</div></div>
+    <div class="epi-item"><span class="epi-icon">👢</span><div class="epi-lbl">Bottes / chaussures étanches (EN 344)</div></div>
+    <div class="epi-item"><span class="epi-icon">🥼</span><div class="epi-lbl">Vêtement protection corps</div></div>
+    <div class="epi-item"><span class="epi-icon">😷</span><div class="epi-lbl">Masque FFP1 si ventilation insuff. (EN 141)</div></div>
+  </div>
+  <div class="alert danger">
+    <strong>🔴 H314</strong> — Provoque des brûlures de la peau et des lésions oculaires graves. <strong>H412</strong> — Nocif pour les organismes aquatiques, effets néfastes à long terme. GHS05.<br><br>
+    <strong>Contact peau :</strong> Enlever immédiatement les vêtements contaminés. Rincer à l'eau 15 min minimum. Consulter médecin.<br>
+    <strong>Contact yeux :</strong> Rincer à l'eau précaution 10–15 min. Retirer lentilles. Consulter ophtalmologiste immédiatement.<br>
+    <strong>Ingestion :</strong> NE PAS faire vomir. Appeler centre antipoison : <strong>01 45 42 59 59</strong> ou <strong>15</strong>.<br>
+    <strong>Ne pas respirer fumées, brouillards, aérosols (P260). Éviter rejet dans l'environnement (P273).</strong>
+  </div>
+
+  <p class="sec-t">Procédure complète — Lavage & désinfection caisse frigorifique (DEFI-V)</p>
+  <div class="card">
+    <div class="card-header"><div class="card-icon teal">❄️</div><div><div class="card-title">Caisse frigorifique — DEFI-V.SID</div><div class="card-sub">Matériel : DEFI-V · pulvériseur BP ou mousseur HP · laveuse HP · bassine · EPI complets</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">1</div><div><div class="step-t">Préparation</div><div class="step-d">Vérifier que l'aire est équipée d'une arrivée d'eau et d'un système de récupération eaux usées (séparateur hydrocarbures). Éteindre équipements électriques, protéger éléments sensibles. Porter les EPI. Préparer solution à <strong>2 %</strong> (2 L de produit pour 100 L d'eau). ⚠️ Se référer au tableau des dilutions.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">2</div><div><div class="step-t">Pré-rinçage HP</div><div class="step-d">Vérifier que la caisse est vide et exempte de déchets ou restes alimentaires. Rincer à l'eau claire HP pour enlever poussières et déchets grossiers.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">3</div><div><div class="step-t">Application du produit (bas → haut)</div><div class="step-d">Pulvériser la solution à 2 % sur parois, sol et plafond. Insister sur les zones souillées : graisses, coulures, sang, restes alimentaires. Pour tracteur + remorque : pulvériser bas→haut puis brosser à la lance télescopique.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">4</div><div><div class="step-t">Action mécanique</div><div class="step-d">Brosser manuellement ou à la lance télescopique les parois et le sol pour décoller les salissures.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--orange);">5</div><div><div class="step-t">⏱ Temps de contact — Ne pas rincer avant !</div><div class="step-d"><strong>5 minutes minimum</strong> pour l'action bactéricide (EN 1276) · <strong>15 minutes minimum</strong> pour l'action virucide (EN 14476). Si ces conditions sont respectées, l'action biocide est réalisée en même temps que la phase de nettoyage (1 seule opération).</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">6</div><div><div class="step-t">Rinçage HP (haut → bas) à l'eau potable</div><div class="step-d">Rincer abondamment à l'eau potable à la laveuse HP, du haut vers le bas. Éliminer tous les résidus sur joints et angles. Évacuer l'eau à la raclette. Laisser les portes ouvertes pour séchage à l'air libre.</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">7</div><div><div class="step-t">Contrôle et enregistrement</div><div class="step-d">Contrôle visuel complet : toutes les zones (parois, angles, plafond, portes) ont été traitées, absence de traces, coulures, dépôts. <strong>Enregistrer l'intervention sur le bon de lavage / suivi intranet.</strong></div></div></div>
+  </div>
+
+  <div class="alert warn"><strong>⚠️ Points de vigilance DEFI-V :</strong> Ne pas dépasser <strong>10 %</strong> de dilution · Toujours rincer après utilisation (pH ~12,5) · Le contact avec acier, métaux galvanisés, aluminium peut provoquer une corrosion et produire de l'hydrogène inflammable — effectuer un rinçage systématique, ne pas laisser sécher sur la carrosserie ou éléments sensibles · Ne pas mélanger avec d'autres produits · Ne pas conserver dans aluminium ou métal galvanisé · Acides forts incompatibles.</div>
+
+  <p class="sec-t">Conditionnement & stockage</p>
+  <div class="card">
+    <div class="info-r"><div class="i-k">Conditionnements</div><div class="i-v">Fût 210 L · Bidon 20 L · Carton 4×5 L · Bidon · Vrac</div></div>
+    <div class="info-r"><div class="i-k">Température de stockage</div><div class="i-v">0 à 40 °C</div></div>
+    <div class="info-r"><div class="i-k">Durée de stockage max.</div><div class="i-v">24 mois</div></div>
+    <div class="info-r"><div class="i-k">❄️ Stockage</div><div class="i-v" style="color:var(--blue-light);">Emballage d'origine · locaux tempérés · abri gel</div></div>
+    <div class="info-r"><div class="i-k">Incompatibilités</div><div class="i-v">Acides forts · oxydants forts</div></div>
+    <div class="info-r"><div class="i-k">Transport</div><div class="i-v">Corrosif · UN 1824 · Groupe III · Classe 8</div></div>
+    <div class="info-r"><div class="i-k">FDS révision</div><div class="i-v">24/10/2016 (Version 0.4)</div></div>
+  </div>
+
+  <div class="footer"><p><strong>SOCIÉTÉ INDUSTRIELLE DE DIFFUSION — SID France</strong><br>2, rue Antoine Etex · 94046 CRÉTEIL CEDEX · T : +33 (0)1 45 17 43 00 · F : +33 (0)1 45 17 43 01<br>contact@sid.tm.fr · www.sid.tm.fr · Code produit 1B21 · FDS Réf. PS 2573 · ISO 9001 · ISO 14001</p></div>
+</section>
+
+
+<!-- ═══════════════════════════════ RÈGLEMENT ═══════════════════════════════ -->
+<section id="reglement" class="section">
+  <div class="alert blue">Le règlement intérieur s'applique à <strong>l'ensemble des salariés</strong>, quel que soit leur contrat, ainsi qu'aux stagiaires et intérimaires — sur tous les sites d'intervention. <strong>Fait à Bouloire le 16 janvier 2026.</strong></div>
+
+  <p class="sec-t">1 · Objet et champ d'application</p>
+  <div class="card"><p>Ce règlement définit les règles relatives à l'hygiène, à la sécurité, à la discipline et au bon fonctionnement de CAMION NET. Il vise à assurer un cadre de travail sain, sécurisé et respectueux. Il s'applique au centre de lavage, dans les bureaux, sur les parkings, dans les véhicules de l'entreprise et sur les sites de nos clients.</p></div>
+
+  <p class="sec-t">2 · Principes fondamentaux</p>
+  <div class="rule"><div class="rule-n">Principe 1</div><div class="rule-t">🤝 Respect</div><div class="rule-b">Comportement professionnel, courtois et respectueux envers collègues, direction, clients et partenaires.</div></div>
+  <div class="rule"><div class="rule-n">Principe 2</div><div class="rule-t">🛡️ Sécurité</div><div class="rule-b">La sécurité prime sur toute autre considération. Les consignes de sécurité, les protocoles clients et l'utilisation des EPI doivent être scrupuleusement respectés.</div></div>
+  <div class="rule"><div class="rule-n">Principe 3</div><div class="rule-t">🔒 Confidentialité</div><div class="rule-b">Les informations relatives à l'entreprise, à ses clients et à ses salariés ne doivent pas être divulguées en dehors du cadre strictement professionnel.</div></div>
+  <div class="rule"><div class="rule-n">Principe 4</div><div class="rule-t">⚖️ Égalité de traitement</div><div class="rule-b">Zéro tolérance pour les propos ou comportements discriminatoires, racistes, sexistes, humiliants ou violents.</div></div>
+
+  <p class="sec-t">3 · Organisation du temps de travail</p>
+  <details><summary>3.1 Horaires et présence</summary><div class="det-b"><p>Les horaires sont précisés dans le contrat et le planning. Les temps de pause y sont intégrés selon les dispositions légales et conventionnelles. Les salariés doivent se présenter en tenue, prêts à exercer leurs fonctions au début de leur service.</p></div></details>
+  <details><summary>3.2 Retards et absences</summary><div class="det-b"><p>Tout retard doit être signalé immédiatement à la direction et, le cas échéant, au client. Les retards répétés ou injustifiés peuvent donner lieu à des sanctions disciplinaires. Toute absence doit être justifiée (ex : arrêt maladie) et portée à la connaissance de l'entreprise sans délai.</p></div></details>
+  <details><summary>3.3 Congés payés</summary><div class="det-b"><p>Les congés payés doivent être demandés au minimum <strong>30 jours à l'avance</strong> via Skello. La demande est étudiée en fonction des nécessités de service. Les congés ne sont considérés comme acquis qu'après <strong>validation expresse</strong>. Toute absence non autorisée peut constituer une faute disciplinaire.</p></div></details>
+
+  <p class="sec-t">4 · Hygiène, sécurité et conditions de travail</p>
+  <div class="alert warn">🛡️ La sécurité des personnes et des biens est une <strong>priorité absolue</strong>. Chaque salarié doit veiller à sa propre sécurité et à celle des autres, respecter les consignes et signaler immédiatement toute situation dangereuse.</div>
+  <details><summary>4.1 Équipements de protection individuelle (EPI)</summary><div class="det-b"><p>EPI fournis selon les postes : tenue de travail · chaussures ou bottes de sécurité · gilet haute visibilité · gants · lunettes · masque respiratoire · combinaison · cônes de balisage.</p><p><strong>Le port des EPI est obligatoire</strong> dès que la situation de travail l'exige. Le refus répété peut constituer une <strong>faute grave</strong>. En cas de besoin de renouvellement, informer l'entreprise afin qu'une solution soit mise en place avec les fournisseurs référencés.</p></div></details>
+  <details><summary>4.2 Produits, machines et lots de bord</summary><div class="det-b"><p>Préparer le lot de bord <strong>la veille de chaque intervention</strong> : clés des véhicules, nettoyeur HP, aspirateur, tuyaux, produits nécessaires, carburant, EPI.</p><p>Respecter strictement les consignes d'utilisation des matériels, protocoles de sécurité et dilutions recommandées. Consulter les FDS sur <strong>www.camionnet.fr</strong> (espace collaborateurs).</p><p>Toute panne doit être signalée immédiatement. Tout dommage résultant d'un usage abusif peut entraîner une sanction disciplinaire.</p></div></details>
+  <details><summary>4.3 Sécurité routière et téléphone</summary><div class="det-b"><p>Le Code de la route est impératif. Conduite de véhicules C/EC réservée aux titulaires du permis correspondant. <strong>Téléphone au volant interdit</strong> (sauf kit mains libres conforme). Consulter des applications ou envoyer des messages en conduisant est interdit.</p></div></details>
+  <details><summary>4.4 Tabac, alcool, drogues et médicaments</summary><div class="det-b"><p>Interdiction de fumer dans les locaux fermés, les véhicules et espaces affichés. <strong>Alcool et drogues pendant le temps de travail ou avant la prise de poste : strictement interdit.</strong> Médicaments affectant la vigilance : prendre les dispositions adaptées et informer l'entreprise si nécessaire (secret médical respecté).</p></div></details>
+
+  <p class="sec-t">5 · Utilisation des ressources logistiques et informatiques</p>
+  <div class="card"><p>Les matériels informatiques, téléphones, véhicules et accès aux logiciels sont mis à disposition pour un <strong>usage strictement professionnel</strong>. Il est interdit d'y accéder pour consulter ou diffuser des contenus illicites, discriminatoires ou contraires à l'image de l'entreprise, ou de diffuser des informations confidentielles.</p></div>
+  <details><summary>5.1 Application Camion Net</summary><div class="det-b"><p>Saisie quotidienne des prestations (<strong>obligatoire</strong>), suivi des véhicules, centralisation des demandes de matériel. Chaque salarié doit renseigner les prestations et les véhicules traités, et faire les demandes de matériel ou de consommable via cette application.</p></div></details>
+  <details><summary>5.2 Application RH Skello</summary><div class="det-b"><p>Consultation du planning · badgeuse géolocalisée (présences) · demandes CP et absences · accès à tous les documents (contrat, mutuelle, fiches de paie, attestations). Utiliser Skello pour : déclarer heures de travail et heures supplémentaires · demandes de congés · informer d'un retard ou d'une absence.</p></div></details>
+  <details><summary>5.3 Procédure d'intervention et traçabilité</summary><div class="det-b"><ol><li>Badger à l'<strong>arrivée</strong> sur Skello</li><li>Remplir un <strong>bon d'intervention</strong> lisiblement et complètement</li><li>Faire <strong>signer</strong> par un représentant du client et <strong>tamponner</strong> si possible</li><li>Conserver un exemplaire pour l'entreprise · remettre un exemplaire au client si prévu</li><li>Badger au <strong>départ</strong> du site sur Skello</li><li>Enregistrer dans l'app Camion Net avec <strong>photos obligatoires</strong> — avant de quitter le site</li></ol><p>Les clients ont un accès direct à leurs prestations via l'intranet. La qualité des informations saisies est essentielle pour la relation commerciale.</p></div></details>
+
+  <p class="sec-t">6 · Discipline et sanctions</p>
+  <div class="card">
+    <p style="margin-bottom:12px;">Tout manquement peut donner lieu à une sanction disciplinaire après respect de la procédure légale :</p>
+    <ul class="cl">
+      <li><div class="dot"></div><span>Rappel à l'ordre — entretien individuel</span></li>
+      <li><div class="dot"></div><span>Avertissement écrit</span></li>
+      <li><div class="dot r"></div><span>Mise à pied disciplinaire</span></li>
+      <li><div class="dot r"></div><span>Toute autre sanction prévue par la loi, pouvant aller jusqu'au licenciement en cas de faute grave ou lourde</span></li>
+    </ul>
+    <div class="alert info" style="margin-top:12px;margin-bottom:0;">ℹ️ Les <strong>sanctions pécuniaires sont interdites</strong>. Cependant, le non-respect récurrent peut impacter l'attribution de primes liées à l'assiduité, la qualité du travail ou le respect des procédures.</div>
+  </div>
+
+  <p class="sec-t">7 · Harcèlement moral, sexuel et discrimination</p>
+  <div class="alert danger">🚫 Zéro tolérance. Aucun salarié ne doit subir d'agissements répétés de harcèlement moral, ni de propos/comportements à connotation sexuelle non désirés, ni de discrimination sous quelque forme que ce soit. Toute personne victime ou témoin doit signaler à la direction. Enquête interne possible + sanctions disciplinaires. Aucune sanction ne peut être prise contre une personne ayant dénoncé de tels agissements.</div>
+
+  <p class="sec-t">8 · Vie collective et locaux</p>
+  <div class="card">
+    <ul class="cl">
+      <li><div class="dot t"></div><span>Maintenir les espaces communs (pause, sanitaires, couloirs, salles de réunion) propres, rangés et utilisables par tous</span></li>
+      <li><div class="dot t"></div><span>Limiter le bruit, ne pas causer de désordre perturbant les autres salariés ou la relation client</span></li>
+      <li><div class="dot t"></div><span>Consommer boissons et aliments uniquement dans les espaces prévus · jeter les déchets dans les conteneurs appropriés</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">9 · Directives opérationnelles et image de l'entreprise</p>
+  <div class="card">
+    <ul class="cl">
+      <li><div class="dot"></div><span>Se présenter en temps et en heure conformément au planning communiqué</span></li>
+      <li><div class="dot"></div><span>Porter une tenue de travail propre et adaptée (EPI obligatoires)</span></li>
+      <li><div class="dot"></div><span>Respecter les protocoles de sécurité et les règlements intérieurs propres aux sites clients (Protocole de sécurité client)</span></li>
+      <li><div class="dot"></div><span>Faire preuve de politesse, d'amabilité et de professionnalisme en toutes circonstances</span></li>
+      <li><div class="dot r"></div><span>S'abstenir de tout propos diffamatoire, rumeur ou attitude dégradant le climat de travail</span></li>
+      <li><div class="dot r"></div><span>Aucun comportement d'exclusion, communautarisme, prosélytisme, racisme ou humiliation n'est accepté</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">10 · Applications et primes</p>
+  <div class="card"><p>L'application Skello est l'outil RH de référence. L'application LZ NET CAMION NET est l'outil de référence pour le suivi des prestations, des demandes de matériel et de l'entretien des véhicules. Les informations saisies doivent être exactes, complètes et à jour — elles conditionnent suivi d'activité, facturation, calcul des heures et qualité de service.</p><div class="div"></div><p>La direction peut lier l'attribution de primes ou avantages à des critères objectifs : respect des consignes · utilisation correcte des applications · assiduité · qualité du travail. Le non-respect des consignes, après rappel, peut entraîner des sanctions disciplinaires.</p></div>
+
+  <p class="sec-t">11 · Dispositions diverses et coordonnées utiles</p>
+  <div class="card">
+    <p style="margin-bottom:12px;">En cas de difficulté particulière (problème de santé, addiction, situation personnelle complexe), se rapprocher de la direction ou des services compétents.</p>
+    <ul class="cl">
+      <li><div class="dot b"></div><span>Drogues Info Service</span></li>
+      <li><div class="dot b"></div><span>Alcool Info Service</span></li>
+      <li><div class="dot b"></div><span>Informations sur le permis à points — Portail officiel de l'administration</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">12 · Convention collective & entrée en vigueur</p>
+  <div class="alert info">📄 <strong>Convention collective nationale des entreprises de propreté et services associés du 26 juillet 2011</strong>. Consultable sur legifrance.gouv.fr (KALICONT000027172335) et tenue à disposition au bureau. Le présent règlement entre en vigueur à la date de communication aux salariés. Toute modification fera l'objet d'une nouvelle communication.</div>
+
+  <div class="card" style="border:2px solid var(--gray-200);">
+    <div class="card-header" style="margin-bottom:10px;"><div class="card-icon navy">✍️</div><div><div class="card-title">Signature du salarié</div><div class="card-sub">À signer et remettre à la direction</div></div></div>
+    <p style="margin-bottom:14px;">Je soussigné(e) certifie avoir pris connaissance du règlement intérieur de CAMION NET et m'engage à en respecter les dispositions.</p>
+    <div class="info-r"><div class="i-k">Nom & Prénom :</div><div class="i-v">________________________________</div></div>
+    <div class="info-r"><div class="i-k">Date :</div><div class="i-v">________________________________</div></div>
+    <div class="info-r"><div class="i-k">Signature :</div><div class="i-v">________________________________</div></div>
+  </div>
+
+  <div class="footer"><p><strong>CAMION NET — SAS LZ NET</strong> · 8, rue du chêne fourchet — 72440 BOULOIRE<br>Tél/Fax : 02 43 63 31 50 · APE 4520B · Capital 100 000 € · SIRET RCS 44205197500039 · TVA n°FR67442051975</p></div>
+</section>
+
+
+<!-- ═══════════════════════════════ MATÉRIEL ═══════════════════════════════ -->
+<section id="materiel" class="section">
+  <div class="alert info">🔧 L'entretien rigoureux du matériel et du véhicule conditionne la qualité du service, la sécurité sur la route et la disponibilité de la flotte.</div>
+
+  <p class="sec-t">Suivi & entretien du véhicule</p>
+  <p style="font-size:12px;color:var(--gray-600);font-weight:300;margin-bottom:10px;">Contrôles quotidiens · consommables · sécurité · anomalies à remonter</p>
+  <div class="card">
+    <div class="card-header"><div class="card-icon navy">🚐</div><div><div class="card-title">Contrôles quotidiens — Véhicule</div><div class="card-sub">À effectuer chaque matin avant le départ</div></div></div>
+    <ul class="cl">
+      <li><div class="dot"></div><span><strong>Niveaux :</strong> huile moteur · liquide de refroidissement · lave-glace</span></li>
+      <li><div class="dot"></div><span><strong>Pneumatiques :</strong> pression et état visuel (usure, coupures, corps étrangers)</span></li>
+      <li><div class="dot"></div><span><strong>Éclairages :</strong> feux avant, arrière, stop, clignotants, feux de recul</span></li>
+      <li><div class="dot"></div><span><strong>Rétroviseurs :</strong> réglage et propreté</span></li>
+      <li><div class="dot"></div><span><strong>Carburant :</strong> autonomie suffisante pour la journée</span></li>
+      <li><div class="dot t"></div><span><strong>Documents de bord :</strong> carte grise · assurance · permis valide</span></li>
+      <li><div class="dot t"></div><span><strong>Signalisation d'urgence :</strong> gilet HV et triangle de pré-signalisation accessibles immédiatement</span></li>
+      <li><div class="dot t"></div><span><strong>Propreté</strong> intérieure et extérieure du véhicule</span></li>
+    </ul>
+  </div>
+  <div class="alert warn">⚠️ Toute anomalie sur le véhicule doit être <strong>immédiatement signalée</strong> à la direction via <strong>camionnet.fr (espace collaborateurs)</strong>. Ne pas prendre la route avec un véhicule défaillant.</div>
+
+  <p class="sec-t">Suivi & entretien du matériel de lavage</p>
+  <p style="font-size:12px;color:var(--gray-600);font-weight:300;margin-bottom:10px;">Mise en route · maintenance · pannes fréquentes · stockage · check sécurité</p>
+  <div class="card">
+    <div class="card-header"><div class="card-icon orange">⚙️</div><div><div class="card-title">Contrôles matériel — Nettoyeur HP & équipements</div><div class="card-sub">À vérifier avant chaque intervention</div></div></div>
+    <ul class="cl">
+      <li><div class="dot"></div><span><strong>Nettoyeur HP :</strong> démarrage, pression, connexions serrées, flexibles sans fuite</span></li>
+      <li><div class="dot"></div><span><strong>Pistolet & lance :</strong> fonctionnement correct, usure des joints, verrouillage sécurité</span></li>
+      <li><div class="dot"></div><span><strong>Flexibles HP :</strong> absence de déchirure, frottement, déformation — vérifier les deux extrémités</span></li>
+      <li><div class="dot"></div><span><strong>Joints de rechange :</strong> stock suffisant en réserve dans le véhicule</span></li>
+      <li><div class="dot"></div><span><strong>Brosse télescopique :</strong> poils en bon état, extension sans blocage</span></li>
+      <li><div class="dot"></div><span><strong>Raclettes :</strong> lame non usée, non fissurée</span></li>
+      <li><div class="dot"></div><span><strong>Aspirateur :</strong> filtre propre, aspiration correcte</span></li>
+      <li><div class="dot t"></div><span><strong>Matériel en double obligatoire :</strong> nettoyeur HP · flexibles · pistolet · lance · joints — tous en état de fonctionnement</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">Stocks produits & consommables</p>
+  <div class="card">
+    <div class="info-r"><div class="i-k">🟧 HP PL99-AL (ABAX)</div><div class="i-v">Stock minimum : 1 bidon</div></div>
+    <div class="info-r"><div class="i-k">🟦 DEFI-V.SID (SID France)</div><div class="i-v">Stock minimum : 1 bidon</div></div>
+    <div class="info-r"><div class="i-k">🛡️ EPI de rechange</div><div class="i-v">Gants nitrile · lunettes · masque VOC</div></div>
+    <div class="info-r"><div class="i-k">📦 Demande de réapprovisionnement</div><div class="i-v">Via camionnet.fr — Espace collaborateurs</div></div>
+  </div>
+
+  <p class="sec-t">Pannes fréquentes & dépannage</p>
+  <details><summary>Le nettoyeur HP ne démarre pas</summary><div class="det-b"><p>Vérifier : niveau de carburant · interrupteur ON · bouchon d'huile · filtre à air propre. Si démarrage électrique : vérifier la batterie. Ne pas forcer le démarreur plus de 5 secondes consécutives. Si le problème persiste, signaler à l'exploitation.</p></div></details>
+  <details><summary>Perte de pression HP</summary><div class="det-b"><p>Vérifier : serrage de tous les raccords · absence de fuite sur les flexibles · filtre d'entrée d'eau non obstrué · buse non encrassée. En cas de problème persistant, ne pas forcer — signaler immédiatement à l'exploitation.</p></div></details>
+  <details><summary>Fuite sur flexible ou raccord</summary><div class="det-b"><p>Arrêter immédiatement la pression. Identifier l'origine de la fuite. Remplacer le joint ou le flexible avec la réserve disponible à bord. Si flexible HS : utiliser le matériel en double. Signaler la panne à la direction via l'espace collaborateurs.</p></div></details>
+
+  <p class="sec-t">Anomalies à remonter impérativement</p>
+  <div class="card">
+    <ul class="cl">
+      <li><div class="dot r"></div><span>Panne ou dysfonctionnement du nettoyeur HP ou de l'aspirateur</span></li>
+      <li><div class="dot r"></div><span>Fuite ou détérioration d'un flexible HP</span></li>
+      <li><div class="dot r"></div><span>Voyant allumé ou alarme sur le tableau de bord du véhicule</span></li>
+      <li><div class="dot r"></div><span>Accident ou incident (même mineur) sur site ou sur la route</span></li>
+      <li><div class="dot r"></div><span>Stock de produit inférieur au minimum requis</span></li>
+      <li><div class="dot r"></div><span>Dégradation ou disparition de matériel ou d'EPI</span></li>
+    </ul>
+    <div class="alert danger" style="margin-top:12px;margin-bottom:0;">📞 Contacter <strong>immédiatement</strong> le Responsable d'Exploitation :<br><strong>Franck Doiteaux — 06 99 56 06 40</strong> · exploitation@camionnet.fr<br>Puis saisir la demande via <strong>camionnet.fr (Espace collaborateurs)</strong>.</div>
+  </div>
+
+  <p class="sec-t">Stockage des produits chimiques</p>
+  <div class="card">
+    <ul class="cl">
+      <li><div class="dot"></div><span><strong>PL99-AL :</strong> stocker à l'abri du gel (≥ 0°C)</span></li>
+      <li><div class="dot"></div><span><strong>DEFI-V.SID :</strong> emballage d'origine · locaux tempérés · 0 à 40°C · durée max. 24 mois</span></li>
+      <li><div class="dot r"></div><span>Ne jamais stocker dans des récipients en aluminium, métal galvanisé ou autres conteneurs sensibles à la corrosion</span></li>
+      <li><div class="dot r"></div><span>Conserver à l'écart des acides forts et des oxydants forts</span></li>
+      <li><div class="dot r"></div><span>Ne jamais remettre le produit répandu dans son récipient d'origine</span></li>
+      <li><div class="dot t"></div><span>Garder les conteneurs fermés en dehors de leur utilisation · protéger de la chaleur, de l'humidité et des rayons directs du soleil</span></li>
+    </ul>
+  </div>
+
+  <p class="sec-t">En cas de déversement accidentel</p>
+  <div class="card">
+    <div class="step"><div class="step-n" style="background:var(--red);">1</div><div><div class="step-t">Contenir le déversement</div><div class="step-d">Éviter la pénétration dans les égouts et les eaux potables. Écarter toute source d'ignition. Éloigner le personnel superflu. Aérer la zone.</div></div></div>
+    <div class="step"><div class="step-n">2</div><div><div class="step-t">Récupérer avec absorbants inertes</div><div class="step-d">Absorber avec de l'argile ou de la terre de diatomées. Pour petites quantités : absorbant non combustible + pelleter dans conteneur fermé.</div></div></div>
+    <div class="step"><div class="step-n">3</div><div><div class="step-t">Neutraliser le pH (produits alcalins)</div><div class="step-d">Neutraliser les rejets jusqu'à pH 6,5–8,5 avec un acide dilué (ex : NEUTRALIBASE).</div></div></div>
+    <div class="step"><div class="step-n" style="background:var(--teal);">4</div><div><div class="step-t">Élimination conforme</div><div class="step-d">Déposer absorbants souillés dans un contenant approprié. Remettre à une entreprise agréée. Ne pas jeter dans les déchets ordinaires ni dans l'environnement. Ne pas déverser dans les égouts ni dans les cours d'eau.</div></div></div>
+  </div>
+
+  <div class="footer"><p><strong>CAMION NET — SAS LZ NET</strong><br>8, rue du chêne fourchet — 72440 BOULOIRE · Tél/Fax : 02 43 63 31 50 · Portable : 06 64 48 47 64<br>contact@camionnet.fr · www.camionnet.fr · APE 4520B · SIRET RCS 44205197500039 · TVA n°FR67442051975</p></div>
+</section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <button class="bn active" onclick="showSection('accueil',null,this)"><span class="bn-i">🏠</span><span class="bn-l">Accueil</span></button>
+  <button class="bn" onclick="showSection('contacts',null,this)"><span class="bn-i">📞</span><span class="bn-l">Contacts</span></button>
+  <button class="bn" onclick="showSection('pratiques',null,this)"><span class="bn-i">✅</span><span class="bn-l">Pratiques</span></button>
+  <button class="bn" onclick="showSection('pl99',null,this)"><span class="bn-i">🟧</span><span class="bn-l">PL99</span></button>
+  <button class="bn" onclick="showSection('defiv',null,this)"><span class="bn-i">🟦</span><span class="bn-l">DEFI-V</span></button>
+</nav>
+
+<script>
+function showSection(id, tabEl, bnEl) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bn').forEach(b => b.classList.remove('active'));
+  const map = {accueil:0,contacts:1,pratiques:2,pl99:3,defiv:4,reglement:5,materiel:6};
+  const idx = map[id];
+  if (idx !== undefined) {
+    const tabs = document.querySelectorAll('.nav-tab');
+    if (tabs[idx]) { tabs[idx].classList.add('active'); tabs[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+  }
+  if (tabEl) tabEl.classList.add('active');
+  const bnMap = {0:'accueil',1:'contacts',2:'pratiques',3:'pl99',4:'defiv'};
+  document.querySelectorAll('.bn').forEach((bn, i) => { if (bnMap[i] === id) bn.classList.add('active'); });
+  if (bnEl) bnEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
 </body>
 </html>

@@ -892,10 +892,12 @@ function showSection(id, tabEl, bnEl) {
   var sec = document.getElementById(id);
   if(sec) sec.classList.add('active');
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  if(tabEl) tabEl.classList.add('active');
-  else document.querySelectorAll('.nav-tab').forEach(t => {
-    if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('active');
-  });
+  if(tabEl) { tabEl.classList.add('active'); }
+  else { document.querySelectorAll('.nav-tab').forEach(t => { if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('active'); }); }
+  document.querySelectorAll('.bn').forEach(b => b.classList.remove('active'));
+  if(bnEl) bnEl.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+});
   document.querySelectorAll('.bn').forEach(b => b.classList.remove('active'));
   if(bnEl) bnEl.classList.add('active');
   else document.querySelectorAll('.bn').forEach(b => {
